@@ -11,26 +11,23 @@ class Node:
 class Solution:
     def connect(self, root: 'Node') -> 'Node':
         if root == None: return None
-        bfsOrder = []
+        
         queue = [root]
+        
+        j = 1
+        breadthLength = 2 ** 0
         
         while len(queue) > 0:
             current = queue.pop(0)
-            if current.left: queue.append(current.left)
-            if current.right: queue.append(current.right)
-            bfsOrder.append(current)
-        
-        num = 0
-        i = 0
-        j = 1
-        breadthLength = 2 ** num
-        while i < len(bfsOrder):
             if j == breadthLength:
-                bfsOrder[i].next = None
+                current.next = None
                 breadthLength = breadthLength*2
                 j = 1
             else:
-                bfsOrder[i].next = bfsOrder[i + 1]
+                current.next = queue[0]
                 j += 1
-            i += 1
+            
+            if current.left: queue.append(current.left)
+            if current.right: queue.append(current.right)
+
         return root
